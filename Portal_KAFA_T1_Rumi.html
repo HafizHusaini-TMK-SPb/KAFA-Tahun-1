@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal Latihan KAFA Tahun 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --hijau:#0f7a5a; --hijau2:#e6f5ef; --emas:#f2b705; --merah:#d64545; --merah2:#fdeaea;
+  --teks:#1f2a2a; --kelabu:#6b7777; --latar:#f6faf8; --kad:#ffffff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--latar);color:var(--teks);
+  font-family:"Nunito",system-ui,sans-serif;direction:ltr;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:16px}
+header{background:linear-gradient(135deg,var(--hijau),#16a37a);color:#fff;border-radius:18px;
+  padding:20px;text-align:center;box-shadow:0 6px 18px rgba(15,122,90,.25)}
+header h1{margin:0;font-size:32px}
+header p{margin:4px 0 0;font-size:20px;opacity:.95}
+.kad{background:var(--kad);border-radius:18px;padding:20px;margin-top:16px;box-shadow:0 3px 12px rgba(0,0,0,.06)}
+label{display:block;font-size:20px;font-weight:600;margin:12px 0 4px}
+input,select{width:100%;font-family:inherit;font-size:20px;padding:10px 14px;border:2px solid #cfe3db;
+  border-radius:12px;background:#fff}
+input:focus,select:focus{outline:none;border-color:var(--hijau)}
+.btn{display:inline-block;border:none;cursor:pointer;font-family:inherit;font-size:22px;font-weight:700;
+  padding:10px 26px;border-radius:14px;background:var(--hijau);color:#fff;margin-top:16px}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.kuning{background:var(--emas);color:#3a2c00}
+.btn.putih{background:#fff;color:var(--hijau);border:2px solid var(--hijau)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:12px}
+.unit{background:var(--hijau2);border:2px solid transparent;border-radius:16px;padding:16px;cursor:pointer;
+  text-align:center;font-family:inherit;font-size:20px;font-weight:700;color:var(--hijau);transition:.15s}
+.unit:hover{border-color:var(--hijau);transform:translateY(-2px)}
+.unit small{display:block;font-size:17px;font-weight:400;color:var(--kelabu)}
+.unit.semua{background:#fff7d9;color:#8a6500}
+.atas{display:flex;justify-content:space-between;align-items:center;font-size:18px;color:var(--kelabu)}
+.bar{height:10px;background:#e3eeea;border-radius:10px;overflow:hidden;margin:8px 0 4px}
+.bar div{height:100%;background:var(--emas);transition:width .3s}
+.soalan{font-size:26px;font-weight:700;margin:16px 0 14px;line-height:1.6}
+.pilihan{display:grid;gap:12px}
+.pil{font-family:inherit;font-size:22px;text-align:left;padding:12px 18px;border-radius:14px;
+  border:3px solid #d6e6df;background:#fff;cursor:pointer;display:flex;align-items:center;gap:14px;transition:.12s}
+.pil:hover:not(:disabled){border-color:var(--hijau);background:var(--hijau2)}
+.pil .huruf{flex:0 0 44px;height:44px;border-radius:50%;background:var(--hijau2);color:var(--hijau);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px}
+.pil.betul{border-color:var(--hijau);background:#d9f3e8}
+.pil.salah{border-color:var(--merah);background:var(--merah2)}
+.pil:disabled{cursor:default}
+.tf{grid-template-columns:1fr 1fr}
+.tf .pil{justify-content:center;font-size:26px}
+.maklum{margin-top:14px;padding:12px 16px;border-radius:14px;font-size:22px;display:none}
+.maklum.ok{display:block;background:#d9f3e8;color:#0b5c43}
+.maklum.no{display:block;background:var(--merah2);color:#8f2424}
+.tengah{text-align:center}
+.skor{font-size:64px;font-weight:700;color:var(--hijau);margin:4px 0}
+.bintang{font-size:46px;letter-spacing:6px}
+.ralat{color:var(--merah);font-size:18px;min-height:28px}
+footer{text-align:center;font-family:system-ui,sans-serif;direction:ltr;font-size:13px;color:var(--kelabu);margin:22px 0 8px}
+.hide{display:none}
+@media (max-width:480px){
+  header h1{font-size:24px}.soalan{font-size:22px}.pil{font-size:19px}.tf .pil{font-size:22px}
+}
+
+.subjek{background:#fff;border:3px solid var(--hijau2);border-radius:18px;padding:18px 12px;cursor:pointer;
+  text-align:center;font-family:inherit;font-size:22px;font-weight:700;color:var(--hijau);transition:.15s}
+.subjek .ik{font-size:40px;display:block;line-height:1.3}
+.subjek small{display:block;font-size:17px;font-weight:400;color:var(--kelabu)}
+.subjek:hover:not(:disabled){border-color:var(--hijau);transform:translateY(-2px)}
+.subjek:disabled{opacity:.45;cursor:default}
+.kembali{background:none;border:none;font-family:inherit;font-size:20px;color:var(--hijau);cursor:pointer;padding:0;margin-bottom:6px}
+.ar{font-family:"Noto Naskh Arabic","Scheherazade New",serif;font-size:1.25em;line-height:1.7;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Portal Latihan KAFA Tahun 1</h1>
+    <p>Jabatan Pendidikan Negeri Kedah</p>
+  </header>
+
+  <section id="sPortal" class="kad">
+    <div style="font-size:20px">Assalamualaikum! Pilih mata pelajaran:</div>
+    <div class="grid" id="gridSubjek"></div>
+  </section>
+
+  <section id="sUnit" class="kad hide">
+    <button class="kembali" onclick="tunjuk('sPortal')">◄ Kembali</button>
+    <div style="font-size:22px;font-weight:700" id="tajukSubjek"></div>
+    <div style="font-size:18px">Pilih unit:</div>
+    <div class="grid" id="gridUnit"></div>
+  </section>
+
+  <section id="sSoalan" class="kad hide">
+    <button class="kembali" onclick="tunjuk('sUnit')">◄ Kembali</button>
+    <div class="atas"><span id="tajukUnit"></span><span id="bil"></span></div>
+    <div class="bar"><div id="bar" style="width:0"></div></div>
+    <div class="soalan" id="teksSoalan"></div>
+    <div class="pilihan" id="pilihan"></div>
+    <div class="maklum" id="maklum"></div>
+    <div class="tengah"><button class="btn hide" id="btnNext" onclick="seterusnya()">Seterusnya ►</button></div>
+  </section>
+
+  <section id="sKeputusan" class="kad hide tengah">
+    <div style="font-size:24px" id="ucapan"></div>
+    <div class="bintang" id="bintang"></div>
+    <div class="skor" id="skor"></div>
+    <div style="font-size:20px" id="skorTeks"></div>
+    <button class="btn" onclick="mulaUnit(unitSemasa)">Ulang Lagi</button>
+    <button class="btn putih" onclick="tunjuk('sUnit')">Pilih Unit Lain</button>
+    <button class="btn kuning" onclick="tunjuk('sPortal')">Mata Pelajaran Lain</button>
+  </section>
+
+  <footer>© 2026 Fauzan Naim bin Alias • Mentor Kajian Penandaarasan Antarabangsa, JPN Kedah</footer>
+</div>
+
+<script>
+/* ============ BANK SOALAN (a = indeks jawapan betul; tf = betul/salah) ============ */
+const B = "Betul", S = "Salah";
+
+const AKIDAH = [
+ {t:"Rukun Iman", q:[
+  {q:"Rukun Iman ada berapa perkara?", o:["Enam","Lima","Tujuh"], a:0},
+  {q:"Rukun bermaksud ...", o:["perkara asas yang penting","perkara yang tidak penting","perkara yang baru"], a:0},
+  {q:"Iman bermaksud membenarkan dengan ...", o:["hati","mata","tangan"], a:0},
+  {q:"Rukun Iman yang pertama ialah ...", o:["beriman kepada Allah","beriman kepada Rasul","beriman kepada Kitab"], a:0},
+  {q:"Rukun Iman yang keenam ialah beriman kepada ...", o:["Qada' dan Qadar","Hari Kiamat","Malaikat"], a:0},
+  {q:"Hukum beriman dengan Rukun Iman bagi orang Islam ialah ...", o:["wajib","harus","sunat"], a:0},
+  {q:"Orang yang beriman akan ... segala perintah Allah.", o:["melakukan","meninggalkan","melupakan"], a:0},
+  {q:"Antara hikmah beriman bagi negara ialah ...", o:["negara aman","negara huru-hara","negara berpecah-belah"], a:0},
+  {q:"Orang yang beriman suka melakukan kebaikan.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Beriman kepada Allah", q:[
+  {q:"Allah itu Ahad bermaksud Allah itu ...", o:["Satu","Dua","Tiga"], a:0},
+  {q:"Allah tidak beranak dan tidak ...", o:["diperanakkan","melihat","mendengar"], a:0},
+  {q:"Dalil naqli beriman kepada Allah ialah surah ...", o:["Al-Ikhlas","Al-Fatihah","An-Nas"], a:0},
+  {q:"Wujudnya alam ini ialah bukti wujudnya ...", o:["Allah","manusia","malaikat"], a:0},
+  {q:"Siapakah pencipta bumi dan matahari?", o:["Allah","Manusia","Malaikat"], a:0},
+  {q:"Air, haiwan dan tumbuhan ialah ciptaan ...", o:["Allah","manusia","jin"], a:0},
+  {q:"Allah memberi ... kepada orang yang beriman.", o:["rahmat","azab","penyakit"], a:0},
+  {q:"Kita mesti ... kepada Allah atas nikmat-Nya.", o:["bersyukur","marah","merajuk"], a:0},
+  {q:"Allah mempunyai sekutu.", o:[B,S], a:1, tf:true}
+ ]},
+ {t:"Kalimah Syahadah", q:[
+  {q:"Lafaz dua kalimah syahadah ialah Rukun Islam yang ...", o:["pertama","kedua","ketiga"], a:0},
+  {q:"Orang Islam ... mengucap dua kalimah syahadah.", o:["wajib","tidak perlu","dilarang"], a:0},
+  {q:"Syahadah pertama ialah pengakuan tentang keagungan ...", o:["Allah","Rasul","malaikat"], a:0},
+  {q:"Syahadah kedua ialah pengakuan bahawa Nabi Muhammad itu ... Allah.", o:["pesuruh","malaikat","raja"], a:0},
+  {q:"Tiada Tuhan yang layak disembah melainkan ...", o:["Allah","matahari","bulan"], a:0},
+  {q:"Panduan hidup orang yang mengucap syahadah ialah al-Quran dan ...", o:["hadis","buku cerita","surat khabar"], a:0},
+  {q:"Apabila mengucap dua kalimah syahadah, seseorang itu diiktiraf sebagai ...", o:["Muslim","malaikat","jin"], a:0},
+  {q:"Kesan mengucap dua kalimah syahadah ialah taat kepada ...", o:["Allah dan Rasul","jin dan syaitan","kawan sahaja"], a:0},
+  {q:"Orang yang mengucap syahadah menjadi hamba Allah yang taat.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Islam dan Sains (Alam)", q:[
+  {q:"Dari segi bahasa, alam bermaksud ...", o:["petunjuk, bukti atau tanda","permainan","makanan"], a:0},
+  {q:"Alam bersifat ... (fana').", o:["sementara","kekal","tidak berakhir"], a:0},
+  {q:"Contoh alam nyata ialah ...", o:["gunung-ganang","syurga","malaikat"], a:0},
+  {q:"Contoh alam ghaib ialah ...", o:["syurga dan neraka","bintang dan matahari","pokok dan bunga"], a:0},
+  {q:"Manusia dijadikan daripada ...", o:["tanah","cahaya","api"], a:0},
+  {q:"Malaikat dijadikan daripada ...", o:["cahaya","tanah","air"], a:0},
+  {q:"Jin dijadikan daripada ...", o:["api","tanah","cahaya"], a:0},
+  {q:"Allah menjadikan malam untuk manusia ...", o:["berehat","bekerja","bermain"], a:0},
+  {q:"Allah menciptakan makhluk berpasangan seperti lelaki dan ...", o:["perempuan","haiwan","pokok"], a:0},
+  {q:"Kejadian alam ialah bukti Allah Maha Berkuasa.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Asmaul Husna", q:[
+  {q:"Asmaul Husna ialah nama-nama Allah yang ...", o:["indah dan baik","sangat pendek","susah disebut"], a:0},
+  {q:"Berapakah bilangan Asmaul Husna?", o:["99","20","100"], a:0},
+  {q:"Cara berinteraksi dengan Asmaul Husna ialah ...", o:["menghafaz dan mengetahui maknanya","melupakannya","tidak menyebutnya"], a:0},
+  {q:"Kita juga boleh ... dengan Asmaul Husna.", o:["berdoa","bergaduh","bermusuh"], a:0},
+  {q:"Orang yang menghafaz Asmaul Husna dan meyakini maknanya akan ... Allah.", o:["dikasihi","dimarahi","dilupakan"], a:0},
+  {q:"Menyebut nama-nama Allah membuktikan ... kita kepada Allah.", o:["kecintaan","kemarahan","kebencian"], a:0},
+  {q:"Kita digalakkan menyebut nama-nama Allah.", o:[B,S], a:0, tf:true},
+  {q:"Allah hanya mempunyai sepuluh nama.", o:[B,S], a:1, tf:true}
+ ]},
+ {t:"Konsep Muraqabah", q:[
+  {q:"Dari segi bahasa, muraqabah bermaksud ...", o:["pengawasan dan pemantauan","permainan","percutian"], a:0},
+  {q:"Orang yang bersifat muraqabah yakin bahawa Allah sentiasa ... dirinya.", o:["melihat","tidak mengetahui","jauh daripada"], a:0},
+  {q:"Allah sentiasa ... apa yang kita cakap.", o:["mendengar","melupakan","tidak tahu"], a:0},
+  {q:"Orang yang bersifat muraqabah melakukan ibadah dengan ...", o:["ikhlas","malas","terpaksa"], a:0},
+  {q:"Dia selalu berzikir dengan mengucapkan tasbih, tahmid dan ...", o:["takbir","bersorak","bergurau"], a:0},
+  {q:"Kesan muraqabah ialah menjauhi ...", o:["maksiat","ibadah","kebaikan"], a:0},
+  {q:"Jika terbuat dosa, orang yang bersifat muraqabah akan segera ...", o:["bertaubat","gembira","menyembunyikannya"], a:0},
+  {q:"Kita memohon pertolongan Allah dengan penuh ...", o:["sabar","marah","sombong"], a:0},
+  {q:"Orang yang beriman sentiasa merasakan Allah melihat setiap perbuatannya.", o:[B,S], a:0, tf:true}
+ ]}
+];
+
+const IBADAH = [
+ {t:"Konsep Kehambaan dalam Islam", q:[
+  {q:"Semua makhluk ialah ciptaan Allah dan ... kepada-Nya.", o:["hamba","raja","tuan"], a:0},
+  {q:"Tujuan manusia diciptakan ialah untuk ... kepada Allah.", o:["beribadat","bermain","tidur"], a:0},
+  {q:"Ibadah bermaksud patuh dan melakukan ... Allah.", o:["suruhan","larangan","permainan"], a:0},
+  {q:"Contoh ibadah khusus ialah ...", o:["solat","membaca buku","menolong kawan"], a:0},
+  {q:"Contoh ibadah umum ialah ...", o:["menolong orang","puasa","zakat"], a:0},
+  {q:"Puasa, zakat dan haji ialah contoh ibadah ...", o:["khusus","umum","sunat"], a:0},
+  {q:"Menjaga alam sekitar dan memelihara haiwan ialah peranan manusia sebagai ... Allah.", o:["hamba","musuh","sekutu"], a:0},
+  {q:"Manusia tidak boleh mensyirikkan Allah.", o:[B,S], a:0, tf:true},
+  {q:"Tidak membazir ialah salah satu ibadah umum.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Konsep Kebersihan dalam Islam", q:[
+  {q:"Kebersihan ialah membersihkan diri, pakaian dan tempat tinggal daripada ...", o:["kekotoran","pahala","kawan"], a:0},
+  {q:"Semua ibadah khusus dimulakan dengan ...", o:["bersuci","bermain","belajar"], a:0},
+  {q:"Orang yang bersih dan suci disukai ...", o:["Allah","syaitan","jin"], a:0},
+  {q:"Kebersihan yang boleh dilihat pada diri dinamakan kebersihan ...", o:["jasmani","rohani","hati"], a:0},
+  {q:"Kebersihan hati, sikap dan jiwa dinamakan kebersihan ...", o:["rohani","jasmani","pakaian"], a:0},
+  {q:"Contoh kekotoran jasmani ialah ...", o:["darah dan nanah","sombong","dengki"], a:0},
+  {q:"Contoh kekotoran rohani ialah sifat ...", o:["sombong","rajin","jujur"], a:0},
+  {q:"Cara menjaga kebersihan jasmani ialah ...", o:["memberus gigi","berzikir","bersedekah"], a:0},
+  {q:"Cara menjaga kebersihan rohani ialah ...", o:["berzikir","menyapu lantai","mencuci kasut"], a:0},
+  {q:"Hikmah gosok gigi ialah ...", o:["gigi bersih dan sihat","gigi rosak","perut lapar"], a:0},
+  {q:"Hikmah berwuduk ialah ibadat menjadi ...", o:["sah","tidak sah","lambat"], a:0},
+  {q:"Orang yang bersih dibenci oleh syaitan.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Taharah dan Bahagian-bahagian Air", q:[
+  {q:"Taharah bermaksud membersihkan diri daripada kotoran atau ...", o:["hadas","pahala","gembira"], a:0},
+  {q:"Taharah membolehkan kita mengerjakan ibadat seperti ...", o:["solat","makan","tidur"], a:0},
+  {q:"Hukum taharah ialah ...", o:["wajib","harus","makruh"], a:0},
+  {q:"Cara taharah ialah wuduk, istinjak, tayamum dan ...", o:["mandi","minum","makan"], a:0},
+  {q:"Air mutlak ialah air yang suci dan ...", o:["boleh menyucikan","tidak boleh menyucikan","terkena najis"], a:0},
+  {q:"Air yang terkena najis dinamakan air ...", o:["mutanajjis","mutlak","musta'mal"], a:0},
+  {q:"Air yang telah digunakan untuk bersuci dinamakan air ...", o:["musta'mal","musyammas","mutlak"], a:0},
+  {q:"Air yang terdedah kepada cahaya matahari dinamakan air ...", o:["musyammas","mutaghayyir","mutanajjis"], a:0},
+  {q:"Air yang telah berubah sifatnya dinamakan air ...", o:["mutaghayyir","mutlak","musyammas"], a:0},
+  {q:"Contoh air mutlak ialah air ...", o:["hujan","teh","kopi"], a:0},
+  {q:"Manakah air mutlak?", o:["Air laut","Air sirap","Air susu"], a:0},
+  {q:"Air paip ialah air mutlak.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Solat", q:[
+  {q:"Solat dimulakan dengan ... dan diakhiri dengan salam.", o:["takbiratul ihram","rukuk","sujud"], a:0},
+  {q:"Solat merupakan ... agama.", o:["tiang","pintu","bumbung"], a:0},
+  {q:"Ibadah pertama yang akan dihisab oleh Allah di akhirat ialah ...", o:["solat","puasa","zakat"], a:0},
+  {q:"Solat Subuh ada berapa rakaat?", o:["2","3","4"], a:0},
+  {q:"Solat Maghrib ada berapa rakaat?", o:["3","2","4"], a:0},
+  {q:"Solat Zohor ada berapa rakaat?", o:["4","2","3"], a:0},
+  {q:"Solat Isyak ada berapa rakaat?", o:["4","3","2"], a:0},
+  {q:"Waktu solat ... bermula dari terbenam matahari.", o:["Maghrib","Subuh","Zohor"], a:0},
+  {q:"Waktu solat ... bermula dari terbit fajar sadiq.", o:["Subuh","Isyak","Asar"], a:0},
+  {q:"Rukun solat yang pertama ialah ...", o:["berdiri tegak bagi yang mampu","memberi salam","sujud"], a:0},
+  {q:"Dalam solat, kita wajib membaca surah ...", o:["Al-Fatihah","Al-Fil","An-Nas"], a:0},
+  {q:"Rukun solat yang terakhir ialah ...", o:["tertib","niat","takbiratul ihram"], a:0},
+  {q:"Orang Islam yang cukup syarat wajib menunaikan solat.", o:[B,S], a:0, tf:true}
+ ]}
+];
+
+const SIRAH = [
+ {t:"Mengenali Sirah", q:[
+  {q:"Dari segi bahasa, sirah bermaksud ...", o:["sunnah dan jalan","permainan dan lagu","makanan dan minuman"], a:0},
+  {q:"Dari segi istilah, sirah ialah kisah hidup ...", o:["Nabi Muhammad","malaikat","raja-raja"], a:0},
+  {q:"Sirah bermula daripada kelahiran hingga ... Nabi Muhammad.", o:["kewafatan","perkahwinan","kejayaan"], a:0},
+  {q:"Sumber sirah ialah al-Quran, hadis dan ...", o:["kitab-kitab sirah","buku cerita","surat khabar"], a:0},
+  {q:"Kehidupan Nabi Muhammad menjadi ... hidup umat Islam.", o:["panduan","permainan","hiburan"], a:0},
+  {q:"Nabi Muhammad ialah utusan Allah yang ...", o:["terakhir","pertama","kedua"], a:0},
+  {q:"Kita mesti mencintai Nabi Muhammad dan mengikut ... baginda.", o:["sunnah","kesalahan","larangan"], a:0},
+  {q:"Sirah menceritakan tentang keluarga dan sahabat Nabi Muhammad.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Nasab Nabi Muhammad", q:[
+  {q:"Nama penuh Nabi Muhammad ialah ...", o:["Muhammad bin Abdullah","Muhammad bin Abdul Muttalib","Muhammad bin Wahab"], a:0},
+  {q:"Bapa Nabi Muhammad bernama ...", o:["Abdullah bin Abdul Muttalib","Wahab bin Abd Manaf","Abdul Muttalib bin Hashim"], a:0},
+  {q:"Ibu Nabi Muhammad bernama ...", o:["Aminah binti Wahab","Halimah as-Sa'diyah","Khadijah binti Khuwailid"], a:0},
+  {q:"Nama \"Muhammad\" diberikan oleh datuknya ...", o:["Abdul Muttalib","Wahab","Abu Talib"], a:0},
+  {q:"Nabi Muhammad berketurunan Arab ...", o:["Quraisy","Yaman","Syam"], a:0},
+  {q:"Datuk Nabi Muhammad sebelah ibu ialah ...", o:["Wahab bin Abd Manaf","Abdul Muttalib bin Hashim","Abdullah"], a:0},
+  {q:"Abdullah bin Abdul Muttalib ialah seorang ... yang berjaya.", o:["usahawan","petani","nelayan"], a:0},
+  {q:"Aminah binti Wahab berakhlak mulia dan dihormati.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Sebelum Kelahiran Nabi Muhammad", q:[
+  {q:"Peristiwa tentera bergajah diketuai oleh ...", o:["Abrahah","Abdul Muttalib","Abu Jahal"], a:0},
+  {q:"Abrahah ialah seorang raja di ...", o:["Yaman","Mekah","Syam"], a:0},
+  {q:"Tentera bergajah mahu meruntuhkan ...", o:["Kaabah","gereja","rumah Abdul Muttalib"], a:0},
+  {q:"Allah mengutuskan burung ... untuk membinasakan tentera bergajah.", o:["Ababil","gagak","merpati"], a:0},
+  {q:"Burung Ababil melontar ... yang panas.", o:["batu","kayu","air"], a:0},
+  {q:"Peristiwa tentera bergajah diceritakan dalam surah ...", o:["Al-Fil","Al-Ikhlas","An-Nas"], a:0},
+  {q:"Abdullah meninggal dunia ketika pulang daripada berniaga di ...", o:["Syam","Yaman","Mesir"], a:0},
+  {q:"Jenazah Abdullah dikebumikan di ...", o:["Yasrib (Madinah)","Mekah","Taif"], a:0},
+  {q:"Abdullah sempat melihat Nabi Muhammad.", o:[B,S], a:1, tf:true}
+ ]},
+ {t:"Kelahiran Nabi Muhammad", q:[
+  {q:"Maksud nama \"Muhammad\" ialah ...", o:["yang terpuji","yang kuat","yang kaya"], a:0},
+  {q:"Nabi Muhammad dilahirkan pada 12 ...", o:["Rabiulawal","Ramadan","Syawal"], a:0},
+  {q:"Nabi Muhammad dilahirkan pada hari ...", o:["Isnin","Jumaat","Ahad"], a:0},
+  {q:"Nabi Muhammad dilahirkan pada waktu ...", o:["Subuh","Zohor","Maghrib"], a:0},
+  {q:"Nabi Muhammad dilahirkan di ...", o:["Mekah","Madinah","Yaman"], a:0},
+  {q:"Nabi Muhammad dilahirkan pada Tahun ...", o:["Gajah","Kuda","Unta"], a:0},
+  {q:"Nabi Muhammad seorang anak ... kerana bapanya telah meninggal dunia.", o:["yatim","tunggal","sulung"], a:0},
+  {q:"Aminah bermimpi melihat cahaya terang menerangi istana-istana di ...", o:["Syam","Yaman","Mesir"], a:0},
+  {q:"Nama \"Muhammad\" pernah digunakan oleh orang Arab sebelum itu.", o:[B,S], a:1, tf:true}
+ ]}
+];
+
+const ADAB = [
+ {t:"Adab dengan Allah", q:[
+  {q:"Yang menciptakan alam, manusia, binatang dan tumbuhan ialah ...", o:["Allah","manusia","malaikat"], a:0},
+  {q:"Beradab dengan Allah bermaksud melakukan suruhan Allah dan ... larangan-Nya.", o:["meninggalkan","melakukan","melupakan"], a:0},
+  {q:"Hukum beradab dengan Allah ialah ...", o:["wajib","harus","makruh"], a:0},
+  {q:"Contoh beradab dengan Allah ialah menjaga ... lima waktu.", o:["solat","makan","tidur"], a:0},
+  {q:"Contoh beradab dengan Allah ialah sentiasa membaca ...", o:["al-Quran","komik","surat khabar"], a:0},
+  {q:"Hikmah beradab dengan Allah ialah ...", o:["dikasihi Allah","dimurkai Allah","mendapat dosa"], a:0},
+  {q:"Akibat tidak beradab dengan Allah ialah ...", o:["mendapat dosa","mendapat pahala","jiwa tenang"], a:0},
+  {q:"Orang yang tidak beradab dengan Allah mudah dipengaruhi ...", o:["syaitan","malaikat","guru"], a:0},
+  {q:"Kita mesti mensyukuri nikmat Allah.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Adab dengan Ibu Bapa", q:[
+  {q:"Ibu melahirkan dan ... untuk kita.", o:["memasak","bermain","tidur"], a:0},
+  {q:"Bapa mencari ... dan menjaga keluarga.", o:["rezeki","mainan","kawan"], a:0},
+  {q:"Hukum beradab dengan ibu bapa ialah ...", o:["wajib","harus","sunat"], a:0},
+  {q:"Hukum derhaka kepada ibu bapa ialah ...", o:["haram","wajib","sunat"], a:0},
+  {q:"Apabila ibu bapa memanggil, kita mesti ...", o:["segera menyahut","buat tidak dengar","lari keluar"], a:0},
+  {q:"Kita mesti bertutur dengan ibu bapa dengan ...", o:["sopan","kasar","marah"], a:0},
+  {q:"Kita mesti ... ibu bapa.", o:["mendoakan","memarahi","melupakan"], a:0},
+  {q:"Akibat tidak beradab dengan ibu bapa ialah ...", o:["hidup tidak diberkati Allah","dikasihi Allah","mendapat pahala"], a:0},
+  {q:"Kita mesti membantu ibu bapa di rumah.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Adab dengan Keluarga", q:[
+  {q:"Keluarga ialah orang yang mempunyai hubungan ...", o:["persaudaraan","perniagaan","permainan"], a:0},
+  {q:"Manakah ahli keluarga?", o:["Nenek","Guru","Jiran"], a:0},
+  {q:"Mahram bermaksud orang yang ... dikahwini.", o:["haram","boleh","wajib"], a:0},
+  {q:"Kita mesti bercakap dengan keluarga secara ...", o:["lembut","kasar","mengherdik"], a:0},
+  {q:"Kita tidak boleh ... suara kepada keluarga.", o:["meninggikan","merendahkan","melembutkan"], a:0},
+  {q:"Beradab kepada keluarga akan mewujudkan ... dalam keluarga.", o:["kasih sayang","pergaduhan","kesedihan"], a:0},
+  {q:"Akibat tidak beradab dengan keluarga ialah ...", o:["hubungan keluarga menjadi renggang","keluarga bahagia","dikasihi Allah"], a:0},
+  {q:"Cara mewujudkan keluarga bahagia ialah ...", o:["saling hormat-menghormati","saling bergaduh","saling mengejek"], a:0},
+  {q:"Saling tolong-menolong menjadikan keluarga ...", o:["bahagia","berpecah-belah","sedih"], a:0},
+  {q:"Kita boleh menghina adik dan abang.", o:[B,S], a:1, tf:true}
+ ]}
+];
+
+const JAWI = [
+ {t:"Huruf Jawi", q:[
+  {q:"Manakah huruf \"nga\"?", o:["ڠ","غ","ع"], a:0},
+  {q:"Manakah huruf \"pa\"?", o:["ڤ","ف","ق"], a:0},
+  {q:"Manakah huruf \"ca\"?", o:["چ","ج","ح"], a:0},
+  {q:"Manakah huruf \"ga\"?", o:["ݢ","ک","ل"], a:0},
+  {q:"Manakah huruf \"nya\"?", o:["ڽ","ن","ي"], a:0},
+  {q:"Manakah huruf \"va\"?", o:["ۏ","و","ف"], a:0},
+  {q:"Manakah huruf \"ta marbutah\"?", o:["ة","ت","ه"], a:0},
+  {q:"Huruf Jawi yang pertama ialah ...", o:["ا","ب","ي"], a:0},
+  {q:"Huruf selepas ج ialah ...", o:["چ","ح","خ"], a:0},
+  {q:"Huruf selepas غ ialah ...", o:["ڠ","ف","ع"], a:0},
+  {q:"Huruf selepas ک ialah ...", o:["ݢ","ل","ق"], a:0},
+  {q:"Huruf sebelum ڤ ialah ...", o:["ف","ق","غ"], a:0},
+  {q:"Huruf yang sama bentuk dengan ب ialah ...", o:["ت","ج","م"], a:0},
+  {q:"Huruf ڠ ada berapa titik?", o:["Tiga","Dua","Satu"], a:0}
+ ]},
+ {t:"Vokal dan Suku Kata Terbuka", q:[
+  {q:"Huruf vokal dalam Jawi ialah ...", o:["ا، و، ي","ب، ت، ث","م، ن، ل"], a:0},
+  {q:"ب + ا = ...", o:["با","بو","بي"], a:0},
+  {q:"ج + و = ...", o:["جو","جا","جي"], a:0},
+  {q:"ت + ي = ...", o:["تي","تا","تو"], a:0},
+  {q:"ک + و = ...", o:["کو","کا","کي"], a:0},
+  {q:"ن + ا = ...", o:["نا","نو","ني"], a:0},
+  {q:"ڠ + ا = ...", o:["ڠا","ڠو","ڠي"], a:0},
+  {q:"Suku kata با dibaca ...", o:["ba","bu","bi"], a:0},
+  {q:"Suku kata لي dibaca ...", o:["li","la","lu"], a:0},
+  {q:"Suku kata ڤو dibaca ...", o:["pu","pa","pi"], a:0}
+ ]},
+ {t:"Membina Perkataan", q:[
+  {q:"کا + مي = ...", o:["کامي","کومي","کيما"], a:0},
+  {q:"تي + با = ...", o:["تيبا","تابي","توبا"], a:0},
+  {q:"ما + جو = ...", o:["ماجو","موجا","ماجي"], a:0},
+  {q:"سو + چي = ...", o:["سوچي","سيچو","ساچي"], a:0},
+  {q:"Ejaan Jawi bagi \"bayu\" ialah ...", o:["بايو","بويا","بيو"], a:0},
+  {q:"Ejaan Jawi bagi \"kubu\" ialah ...", o:["کوبو","کابي","کيبو"], a:0},
+  {q:"Ejaan Jawi bagi \"payung\" ialah ...", o:["ڤايوڠ","ڤوياڠ","ڤيوڠ"], a:0},
+  {q:"Ejaan Jawi bagi \"daging\" ialah ...", o:["داݢيڠ","ديݢاڠ","دوݢيڠ"], a:0},
+  {q:"Ceraikan huruf “هولو”:", o:["ه، و، ل، و","ه، ل، و","ه، ا، ل، و"], a:0},
+  {q:"Ceraikan huruf “دوکو”:", o:["د، و، ک، و","د، ک، و","د، و، ک"], a:0}
+ ]},
+ {t:"Suku Kata Tertutup", q:[
+  {q:"Ejaan Jawi bagi \"bas\" ialah ...", o:["بس","باس","بوس"], a:0},
+  {q:"Ejaan Jawi bagi \"gas\" ialah ...", o:["ݢس","ݢاس","ݢوس"], a:0},
+  {q:"Ejaan Jawi bagi \"jet\" ialah ...", o:["جيت","جوت","جت"], a:0},
+  {q:"Ejaan Jawi bagi \"sup\" ialah ...", o:["سوڤ","سيڤ","سڤ"], a:0},
+  {q:"Ejaan Jawi bagi \"ros\" ialah ...", o:["روس","ريس","رس"], a:0},
+  {q:"Ejaan Jawi bagi \"pin\" ialah ...", o:["ڤين","ڤون","ڤن"], a:0},
+  {q:"Ejaan Jawi bagi \"tol\" ialah ...", o:["تول","تيل","تل"], a:0},
+  {q:"Ejaan Jawi bagi \"kek\" ialah ...", o:["کيک","کوک","کک"], a:0},
+  {q:"Ejaan Jawi bagi \"mop\" ialah ...", o:["موڤ","ميڤ","مڤ"], a:0}
+ ]},
+ {t:"Huruf Bersambung", q:[
+  {q:"Huruf yang TIDAK boleh bersambung selepasnya ialah ...", o:["ا","ب","م"], a:0},
+  {q:"Huruf yang TIDAK boleh bersambung selepasnya ialah ...", o:["د","ن","س"], a:0},
+  {q:"Huruf yang TIDAK boleh bersambung selepasnya ialah ...", o:["ر","ک","ل"], a:0},
+  {q:"Huruf yang TIDAK boleh bersambung selepasnya ialah ...", o:["و","م","ي"], a:0},
+  {q:"Huruf yang BOLEH bersambung selepasnya ialah ...", o:["م","ر","ذ"], a:0},
+  {q:"Huruf yang BOLEH bersambung selepasnya ialah ...", o:["ن","ا","ز"], a:0},
+  {q:"Huruf yang BOLEH bersambung selepasnya ialah ...", o:["ک","ۏ","د"], a:0},
+  {q:"Huruf ذ boleh bersambung selepasnya.", o:[B,S], a:1, tf:true},
+  {q:"Huruf ڠ boleh bersambung selepasnya.", o:[B,S], a:0, tf:true}
+ ]},
+ {t:"Hari dan Bulan", q:[
+  {q:"Seminggu ada berapa hari?", o:["Tujuh","Lima","Enam"], a:0},
+  {q:"Ejaan Jawi bagi hari \"Isnin\" ialah ...", o:["اثنين","ثلاث","خميس"], a:0},
+  {q:"Hari selepas Isnin ialah ...", o:["ثلاث","رابو","خميس"], a:0},
+  {q:"Hari selepas Rabu ialah ...", o:["خميس","جمعة","ثلاث"], a:0},
+  {q:"Hari sebelum Sabtu ialah ...", o:["جمعة","خميس","احد"], a:0},
+  {q:"Bulan pertama dalam setahun ialah ...", o:["جانواري","فيبرواري","مچ"], a:0},
+  {q:"Bulan selepas Mac ialah ...", o:["اڤريل","مي","جون"], a:0},
+  {q:"Bulan selepas Jun ialah ...", o:["جولاي","اوݢوس","مي"], a:0},
+  {q:"Bulan selepas Ogos ialah ...", o:["سيڤتيمبر","اوکتوبر","جولاي"], a:0},
+  {q:"Bulan terakhir dalam setahun ialah ...", o:["ديسيمبر","نوۏيمبر","اوکتوبر"], a:0}
+ ]}
+];
+
+const BARAB = [
+ {t:"Huruf-huruf Arab (الْحُرُوفُ الْعَرَبِيَّةُ)", q:[
+  {q:"Huruf pertama dalam huruf Arab ialah ...", o:["أ","ب","ي"], a:0},
+  {q:"Huruf terakhir dalam huruf Arab ialah ...", o:["ي","و","هـ"], a:0},
+  {q:"Huruf selepas ب ialah ...", o:["ت","ث","ن"], a:0},
+  {q:"Huruf selepas ح ialah ...", o:["خ","ج","د"], a:0},
+  {q:"Huruf sebelum ز ialah ...", o:["ر","ذ","س"], a:0},
+  {q:"Huruf selepas س ialah ...", o:["ش","ص","ض"], a:0},
+  {q:"Huruf selepas ع ialah ...", o:["غ","ف","ق"], a:0},
+  {q:"Huruf yang ada tiga titik di atas ialah ...", o:["ث","ت","ب"], a:0},
+  {q:"Huruf yang ada satu titik di bawah ialah ...", o:["ب","ت","ن"], a:0},
+  {q:"بَ dibaca ...", o:["ba","bi","bu"], a:0},
+  {q:"تِ dibaca ...", o:["ti","ta","tu"], a:0},
+  {q:"مُ dibaca ...", o:["mu","ma","mi"], a:0}
+ ]},
+ {t:"Ucapan Aluan (التَّحِيَّاتُ وَالتَّرْحِيبَاتُ)", q:[
+  {q:"Jawapan bagi “السَّلَامُ عَلَيْكُمْ” ialah ...", o:["وَعَلَيْكُمُ السَّلَامُ","صَبَاحَ النُّورِ","عَفْوًا"], a:0},
+  {q:"Jawapan bagi “صَبَاحَ الْخَيْرِ” ialah ...", o:["صَبَاحَ النُّورِ","مَسَاءَ النُّورِ","شُكْرًا"], a:0},
+  {q:"Jawapan bagi “مَسَاءَ الْخَيْرِ” ialah ...", o:["مَسَاءَ النُّورِ","صَبَاحَ النُّورِ","أَهْلًا بِكَ"], a:0},
+  {q:"Jawapan bagi “أَهْلًا وَسَهْلًا” ialah ...", o:["أَهْلًا بِكَ","عَفْوًا","مَسَاءَ الْخَيْرِ"], a:0},
+  {q:"Jawapan bagi “شُكْرًا” ialah ...", o:["عَفْوًا","أَهْلًا وَسَهْلًا","السَّلَامُ عَلَيْكُمْ"], a:0},
+  {q:"Apakah maksud “صَبَاحَ الْخَيْرِ”?", o:["Selamat pagi","Selamat petang","Selamat datang"], a:0},
+  {q:"Apakah maksud “مَسَاءَ الْخَيْرِ”?", o:["Selamat petang","Selamat pagi","Terima kasih"], a:0},
+  {q:"Apakah maksud “أَهْلًا وَسَهْلًا”?", o:["Selamat datang","Sama-sama","Selamat petang"], a:0},
+  {q:"Apakah maksud “شُكْرًا”?", o:["Terima kasih","Sama-sama","Selamat datang"], a:0},
+  {q:"Apakah maksud “عَفْوًا”?", o:["Sama-sama","Terima kasih","Selamat pagi"], a:0}
+ ]},
+ {t:"Pengenalan Diri (التَّعَارُفُ)", q:[
+  {q:"Apakah maksud “كَيْفَ حَالُكَ؟”", o:["Apa khabar awak?","Siapa awak?","Berapa umur awak?"], a:0},
+  {q:"Jawapan bagi “كَيْفَ حَالُكَ؟” ialah ...", o:["أَنَا بِخَيْرٍ","عَفْوًا","مَسَاءَ النُّورِ"], a:0},
+  {q:"Apakah maksud “مَنْ أَنْتَ؟”", o:["Siapa awak?","Di manakah awak tinggal?","Apa khabar awak?"], a:0},
+  {q:"Apakah maksud “مَا اسْمُكَ؟”", o:["Siapa nama awak?","Berapa umur awak?","Siapa awak?"], a:0},
+  {q:"Apakah maksud “كَمْ عُمْرُكَ؟”", o:["Berapa umur awak?","Siapa nama awak?","Apa khabar awak?"], a:0},
+  {q:"Apakah maksud “أَيْنَ تَسْكُنُ؟”", o:["Di manakah awak tinggal?","Siapa awak?","Berapa umur awak?"], a:0},
+  {q:"Murid lelaki menyebut: أَنَا ...", o:["طَالِبٌ","طَالِبَةٌ","أُمٌّ"], a:0},
+  {q:"Murid perempuan menyebut: أَنَا ...", o:["طَالِبَةٌ","طَالِبٌ","أَبٌ"], a:0},
+  {q:"“عُمْرِي سَبْعُ سَنَوَاتٍ” bermaksud ...", o:["Umur saya tujuh tahun","Nama saya Tujuh","Saya tinggal di sekolah"], a:0},
+  {q:"“اِسْمِي ...” bermaksud ...", o:["Nama saya ...","Umur saya ...","Saya tinggal di ..."], a:0}
+ ]},
+ {t:"Keluarga Saya (أُسْرَتِي)", q:[
+  {q:"Apakah bahasa Arab bagi \"ayah\"?", o:["أَبٌ","أُمٌّ","أَخٌ"], a:0},
+  {q:"Apakah bahasa Arab bagi \"ibu\"?", o:["أُمٌّ","أَبٌ","أُخْتٌ"], a:0},
+  {q:"Apakah bahasa Arab bagi \"datuk\"?", o:["جَدٌّ","جَدَّةٌ","عَمٌّ"], a:0},
+  {q:"Apakah bahasa Arab bagi \"nenek\"?", o:["جَدَّةٌ","جَدٌّ","عَمَّةٌ"], a:0},
+  {q:"Apakah bahasa Arab bagi \"pak cik\"?", o:["عَمٌّ","عَمَّةٌ","أَخٌ"], a:0},
+  {q:"Apakah bahasa Arab bagi \"mak cik\"?", o:["عَمَّةٌ","عَمٌّ","أُمٌّ"], a:0},
+  {q:"Apakah bahasa Arab bagi \"abang\"?", o:["أَخٌ","أُخْتٌ","أَبٌ"], a:0},
+  {q:"Apakah bahasa Arab bagi \"kakak\"?", o:["أُخْتٌ","أَخٌ","جَدَّةٌ"], a:0},
+  {q:"“مَنْ هَذَا؟” bermaksud ...", o:["Siapakah ini?","Apa khabar awak?","Siapa nama awak?"], a:0},
+  {q:"“أُسْرَتِي” bermaksud ...", o:["Keluarga saya","Rumah saya","Sekolah saya"], a:0},
+  {q:"“هَذِهِ أُمِّي” bermaksud ...", o:["Ini emak saya","Ini emak","Itu datuk saya"], a:0},
+  {q:"“ذَلِكَ جَدِّي” bermaksud ...", o:["Itu datuk saya","Ini datuk","Ini nenek saya"], a:0},
+  {q:"Kata tunjuk untuk perempuan ialah ...", o:["هَذِهِ","هَذَا","ذَلِكَ"], a:0},
+  {q:"Kata tunjuk untuk lelaki ialah ...", o:["هَذَا","هَذِهِ","تِلْكَ"], a:0},
+  {q:"Lengkapkan: ... جَدَّةٌ", o:["هَذِهِ","هَذَا","ذَلِكَ"], a:0},
+  {q:"Lengkapkan: ... أَبٌ", o:["هَذَا","هَذِهِ","تِلْكَ"], a:0},
+  {q:"Lengkapkan: ... أُخْتٌ", o:["هَذِهِ","هَذَا","ذَلِكَ"], a:0},
+  {q:"Perkataan muannas (perempuan) biasanya ada huruf ... di hujung.", o:["ة","ب","م"], a:0},
+  {q:"Manakah perkataan muzakkar (lelaki)?", o:["عَمٌّ","عَمَّةٌ","جَدَّةٌ"], a:0},
+  {q:"Manakah perkataan muannas (perempuan)?", o:["أُمٌّ","أَبٌ","أَخٌ"], a:0}
+ ]},
+ {t:"Nombor 1-10 (الْأَرْقَامُ)", q:[
+  {q:"1 dalam bahasa Arab ialah ...", o:["وَاحِدٌ","اِثْنَانِ","عَشَرَةٌ"], a:0},
+  {q:"2 dalam bahasa Arab ialah ...", o:["اِثْنَانِ","وَاحِدٌ","ثَمَانِيَةٌ"], a:0},
+  {q:"3 dalam bahasa Arab ialah ...", o:["ثَلَاثَةٌ","خَمْسَةٌ","سِتَّةٌ"], a:0},
+  {q:"4 dalam bahasa Arab ialah ...", o:["أَرْبَعَةٌ","سَبْعَةٌ","تِسْعَةٌ"], a:0},
+  {q:"5 dalam bahasa Arab ialah ...", o:["خَمْسَةٌ","ثَلَاثَةٌ","سِتَّةٌ"], a:0},
+  {q:"7 dalam bahasa Arab ialah ...", o:["سَبْعَةٌ","تِسْعَةٌ","أَرْبَعَةٌ"], a:0},
+  {q:"8 dalam bahasa Arab ialah ...", o:["ثَمَانِيَةٌ","ثَلَاثَةٌ","عَشَرَةٌ"], a:0},
+  {q:"9 dalam bahasa Arab ialah ...", o:["تِسْعَةٌ","سَبْعَةٌ","سِتَّةٌ"], a:0},
+  {q:"10 dalam bahasa Arab ialah ...", o:["عَشَرَةٌ","وَاحِدٌ","اِثْنَانِ"], a:0},
+  {q:"“سِتَّةٌ” ialah nombor ...", o:["6","3","9"], a:0},
+  {q:"“خَمْسَةٌ” ialah nombor ...", o:["5","7","4"], a:0},
+  {q:"Kira: 🍎🍎🍎", o:["ثَلَاثَةٌ","اِثْنَانِ","أَرْبَعَةٌ"], a:0},
+  {q:"Kira: ⭐⭐⭐⭐⭐", o:["خَمْسَةٌ","أَرْبَعَةٌ","سِتَّةٌ"], a:0},
+  {q:"Kira: 🚗🚗", o:["اِثْنَانِ","وَاحِدٌ","ثَلَاثَةٌ"], a:0},
+  {q:"Kira: 🐟🐟🐟🐟🐟🐟🐟🐟", o:["ثَمَانِيَةٌ","سَبْعَةٌ","تِسْعَةٌ"], a:0}
+ ]}
+];
+
+/* ============ SENARAI SUBJEK ============ */
+const SUBJEK = [
+  {n:"Akidah",       ik:"🌙", unit:AKIDAH},
+  {n:"Ibadah",       ik:"🕌", unit:IBADAH},
+  {n:"Sirah",        ik:"🐪", unit:SIRAH},
+  {n:"Adab",         ik:"🤲", unit:ADAB},
+  {n:"Jawi",         ik:"✍️", unit:JAWI},
+  {n:"Bahasa Arab",  ik:"🗣️", unit:BARAB}
+];
+const HURUF = ["A","B","C","D"];
+
+let UNIT = [], unitSemasa = 0, senarai = [], idx = 0, markah = 0;
+const $ = id => document.getElementById(id);
+
+/* Teks Arab/Jawi dibungkus supaya dipapar kanan-ke-kiri dengan fon Arab */
+const AR = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+(?:[ \u00A0]*[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+)*/g;
+function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function fmt(t){ return esc(t).replace(AR, m=>`<span class="ar" dir="rtl">${m}</span>`); }
+
+function tunjuk(id){
+  ["sPortal","sUnit","sSoalan","sKeputusan"].forEach(s=>$(s).classList.toggle("hide", s!==id));
+  window.scrollTo(0,0);
+}
+function kocak(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+const kira = u => u.reduce((x,y)=>x+y.q.length,0);
+
+function binaPortal(){
+  const g=$("gridSubjek"); g.innerHTML="";
+  SUBJEK.forEach(s=>{
+    const b=document.createElement("button"); b.className="subjek";
+    const ada=s.unit.length>0;
+    b.innerHTML=`<span class="ik">${s.ik}</span>${s.n}<small>${ada? kira(s.unit)+" soalan" : "Akan datang"}</small>`;
+    b.disabled=!ada; if(ada) b.onclick=()=>pilihSubjek(s);
+    g.appendChild(b);
+  });
+}
+function pilihSubjek(s){
+  UNIT=s.unit; $("tajukSubjek").textContent=s.ik+" "+s.n;
+  const g=$("gridUnit"); g.innerHTML="";
+  UNIT.forEach((u,i)=>{
+    const b=document.createElement("button"); b.className="unit";
+    b.innerHTML=`Unit ${i+1}<small>${fmt(u.t)}</small>`; b.onclick=()=>mulaUnit(i); g.appendChild(b);
+  });
+  const all=document.createElement("button"); all.className="unit semua";
+  all.innerHTML=`Semua Unit<small>${kira(UNIT)} soalan</small>`;
+  all.onclick=()=>mulaUnit(-1); g.appendChild(all);
+  tunjuk("sUnit");
+}
+function mulaUnit(i){
+  unitSemasa=i; idx=0; markah=0;
+  const src = i<0 ? UNIT.flatMap(u=>u.q) : UNIT[i].q;
+  senarai = kocak(src);
+  $("tajukUnit").innerHTML = i<0 ? "Semua Unit" : `Unit ${i+1}: ${fmt(UNIT[i].t)}`;
+  tunjuk("sSoalan"); papar();
+}
+function papar(){
+  const s=senarai[idx];
+  $("bil").textContent=`Soalan ${idx+1} / ${senarai.length}`;
+  $("bar").style.width=(idx/senarai.length*100)+"%";
+  $("teksSoalan").innerHTML=fmt(s.q);
+  const box=$("pilihan"); box.innerHTML=""; box.className="pilihan"+(s.tf?" tf":"");
+  const ops = s.tf ? s.o.map((t,k)=>({t,k})) : kocak(s.o.map((t,k)=>({t,k})));
+  ops.forEach((op,n)=>{
+    const b=document.createElement("button"); b.className="pil"; b.dataset.k=op.k;
+    b.innerHTML = s.tf ? esc(op.t) : `<span class="huruf">${HURUF[n]}</span><span>${fmt(op.t)}</span>`;
+    b.onclick=()=>jawab(b,op.k); box.appendChild(b);
+  });
+  $("maklum").className="maklum"; $("maklum").textContent=""; $("btnNext").classList.add("hide");
+}
+function jawab(btn,k){
+  const s=senarai[idx];
+  document.querySelectorAll(".pil").forEach(b=>{ b.disabled=true; if(+b.dataset.k===s.a) b.classList.add("betul"); });
+  const m=$("maklum");
+  if(k===s.a){ markah++; m.className="maklum ok"; m.textContent="✔ Betul! Bagus."; }
+  else { btn.classList.add("salah"); m.className="maklum no"; m.innerHTML="✘ Kurang tepat. Jawapan yang betul: <b>"+fmt(s.o[s.a])+"</b>"; }
+  const n=$("btnNext"); n.textContent = idx===senarai.length-1 ? "Lihat Keputusan ►" : "Seterusnya ►";
+  n.classList.remove("hide");
+}
+function seterusnya(){ idx++; if(idx<senarai.length) papar(); else tamat(); }
+function tamat(){
+  const j=senarai.length, p=Math.round(markah/j*100);
+  $("skor").textContent=p+"%";
+  $("skorTeks").textContent=`Anda menjawab ${markah} daripada ${j} soalan dengan betul.`;
+  const bt = p>=80?3 : p>=50?2 : p>0?1:0;
+  $("bintang").textContent="★".repeat(bt)+"☆".repeat(3-bt);
+  $("ucapan").textContent = p>=80?"Tahniah! Cemerlang sekali 🌟" : p>=50?"Bagus! Teruskan berusaha 👍" : "Jangan putus asa, cuba lagi 💪";
+  tunjuk("sKeputusan");
+}
+binaPortal();
+</script>
+</body>
+</html>
